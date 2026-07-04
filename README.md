@@ -1,21 +1,23 @@
 # EmojiPicker
 
-EmojiPicker 是一个 iOS 16+ 的 SwiftUI 原生 emoji 选择器。它复刻了 macOS 风格的弹出式 emoji picker 体验，同时保持公开 API 简洁，适合直接集成到 SwiftUI 应用中。
+[简体中文](README.zh-CN.md)
 
-这个库的界面主体由 SwiftUI 实现，不依赖 `UIViewControllerRepresentable` 承载上游 UIKit picker。Emoji 定义资源来自 [MCEmojiPicker](https://github.com/izyumkin/MCEmojiPicker)，并在本库中以 Swift Package 资源形式打包。
+EmojiPicker is a native SwiftUI emoji picker for iOS 16+. It recreates a macOS-style popover emoji picker while keeping the public API small and easy to integrate into SwiftUI apps.
+
+The picker UI is implemented in SwiftUI instead of wrapping the original UIKit picker through `UIViewControllerRepresentable`. Emoji definition resources are derived from [MCEmojiPicker](https://github.com/izyumkin/MCEmojiPicker) and packaged as Swift Package resources.
 
 ## Features
 
-- SwiftUI 原生 `EmojiPickerView`。
-- 通过 `View.emojiPicker(isPresented:selectedEmoji:configuration:)` 以 popover 形式展示。
-- 按类别分组的 8 列 emoji 网格。
-- Sticky section header。
-- 底部分类栏，支持点击跳转和滚动时自动高亮当前分类。
-- 长按 emoji 预览。
-- 支持肤色选择，并通过 `UserDefaults` 记住选择。
-- 支持常用 emoji 记录和排序。
-- 根据当前 iOS 版本过滤不可用的 emoji 定义。
-- 支持自定义尺寸、列数、选中颜色、触觉反馈、选择后是否关闭等配置。
+- Native SwiftUI `EmojiPickerView`.
+- Popover presentation through `View.emojiPicker(isPresented:selectedEmoji:configuration:)`.
+- Category-grouped emoji grid with 8 columns by default.
+- Sticky section headers.
+- Bottom category bar with tap-to-jump and scroll-synced selection.
+- Long-press emoji preview.
+- Skin tone picker with persisted skin tone preference.
+- Frequently used emoji tracking and sorting.
+- Emoji availability filtering based on the current iOS version.
+- Configurable size, columns, selected category color, haptics, dismiss behavior, and popover arrow edge.
 
 ## Requirements
 
@@ -28,20 +30,20 @@ EmojiPicker 是一个 iOS 16+ 的 SwiftUI 原生 emoji 选择器。它复刻了 
 
 ### Xcode
 
-1. 打开你的 iOS 项目。
-2. 选择 `File > Add Package Dependencies...`。
-3. 输入仓库地址：
+1. Open your iOS project in Xcode.
+2. Choose `File > Add Package Dependencies...`.
+3. Enter the repository URL:
 
 ```text
 https://github.com/RamuNeon/EmojiPicker
 ```
 
-4. 选择需要的版本规则。
-5. 将 `EmojiPicker` 添加到你的 app target。
+4. Select the dependency rule you want to use.
+5. Add `EmojiPicker` to your app target.
 
 ### Package.swift
 
-如果你的项目本身也是 Swift Package，可以在 `Package.swift` 中添加依赖：
+If your app or library is also a Swift Package, add EmojiPicker to `Package.swift`:
 
 ```swift
 dependencies: [
@@ -49,7 +51,7 @@ dependencies: [
 ]
 ```
 
-然后在 target 中添加产品依赖：
+Then add the product to your target dependencies:
 
 ```swift
 targets: [
@@ -62,7 +64,7 @@ targets: [
 ]
 ```
 
-当前如果还没有发布 tag，也可以先使用分支依赖：
+If no release tag is available yet, use the `main` branch temporarily:
 
 ```swift
 .package(url: "https://github.com/RamuNeon/EmojiPicker", branch: "main")
@@ -70,7 +72,7 @@ targets: [
 
 ## Quick Start
 
-最常见的用法是把 picker 绑定到一个按钮上。点击按钮后以 popover 形式展示，选择 emoji 后自动更新绑定值。
+The most common integration is to attach the picker to a button. Tapping the button presents the picker, and choosing an emoji updates the bound value.
 
 ```swift
 import SwiftUI
@@ -98,7 +100,7 @@ struct ContentView: View {
 
 ## Customization
 
-通过 `EmojiPickerConfiguration` 调整 picker 的展示和交互行为：
+Use `EmojiPickerConfiguration` to customize presentation and interaction behavior:
 
 ```swift
 .emojiPicker(
@@ -122,19 +124,19 @@ struct ContentView: View {
 
 | Option | Default | Description |
 | --- | --- | --- |
-| `width` | `340` | popover 内容宽度。 |
-| `height` | `380` | popover 内容高度。 |
-| `columnCount` | `8` | emoji 网格列数。 |
-| `selectedCategoryTintColor` | `.blue` | 底部分类栏选中颜色。 |
-| `dismissAfterSelection` | `true` | 选择 emoji 后是否自动关闭 picker。 |
-| `feedbackStyle` | `.light` | 触觉反馈样式；传入 `nil` 可关闭反馈。 |
-| `showEmptyCategories` | `false` | 是否展示空分类。 |
-| `maxFrequentlyUsedCount` | `30` | 常用 emoji 分类最多展示数量。 |
-| `arrowEdge` | `.top` | SwiftUI popover 箭头方向。 |
+| `width` | `340` | Popover content width. |
+| `height` | `380` | Popover content height. |
+| `columnCount` | `8` | Number of emoji grid columns. |
+| `selectedCategoryTintColor` | `.blue` | Selected color in the bottom category bar. |
+| `dismissAfterSelection` | `true` | Whether the picker closes after selecting an emoji. |
+| `feedbackStyle` | `.light` | Haptic feedback style. Pass `nil` to disable haptics. |
+| `showEmptyCategories` | `false` | Whether empty categories should be shown. |
+| `maxFrequentlyUsedCount` | `30` | Maximum number of emoji in the frequently used category. |
+| `arrowEdge` | `.top` | SwiftUI popover arrow edge. |
 
 ## Inline Picker
 
-如果不需要 popover，也可以直接把 `EmojiPickerView` 嵌入你的界面，例如放在 sheet、panel 或自定义容器中：
+If you do not need popover presentation, embed `EmojiPickerView` directly in a sheet, panel, or custom container:
 
 ```swift
 struct InlineEmojiPicker: View {
@@ -147,7 +149,7 @@ struct InlineEmojiPicker: View {
 }
 ```
 
-`EmojiPickerView` 也支持传入 `isPresented` binding，用于在选择后控制外部容器关闭：
+`EmojiPickerView` also accepts an `isPresented` binding so selection can dismiss the surrounding container:
 
 ```swift
 EmojiPickerView(
@@ -159,12 +161,12 @@ EmojiPickerView(
 
 ## Data and Persistence
 
-EmojiPicker 内置两层数据能力：
+EmojiPicker includes two data-layer components:
 
-- `BundleEmojiCatalogProvider`：从 Swift Package 资源中读取 emoji JSON，并根据当前 iOS 支持的 emoji 版本过滤。
-- `UserDefaultsEmojiStorage`：保存肤色偏好和常用 emoji 使用记录。
+- `BundleEmojiCatalogProvider`: loads emoji JSON resources from the Swift Package bundle and filters emoji by the current iOS-supported emoji version.
+- `UserDefaultsEmojiStorage`: persists skin tone preferences and frequently used emoji history.
 
-默认情况下，你不需要手动创建这些对象。如果需要隔离存储空间或用于测试，可以直接初始化 `EmojiPickerView` 并注入自定义 storage：
+You do not need to create these manually for the default setup. If you need an isolated storage namespace, initialize `EmojiPickerView` directly and inject custom storage:
 
 ```swift
 EmojiPickerView(
@@ -178,16 +180,16 @@ EmojiPickerView(
 
 ## Notes
 
-- SwiftUI 的 popover 在紧凑宽度设备上的行为受系统控制；iOS 16.4+ 会使用 `.presentationCompactAdaptation(.popover)` 保持 popover 风格。
-- 本库当前不提供 emoji 搜索 UI。
-- 多人组合肤色等复杂 emoji 序列遵循源数据能力，不额外拆解组合序列。
+- SwiftUI popover behavior on compact-width devices is controlled by the system. On iOS 16.4+, EmojiPicker uses `.presentationCompactAdaptation(.popover)` to keep popover-style presentation.
+- EmojiPicker does not currently include emoji search UI.
+- Complex multi-person skin tone emoji sequences follow the source data and are not additionally decomposed by this package.
 
 ## License and Credits
 
-EmojiPicker 使用 MIT License。
+EmojiPicker is distributed under the MIT License.
 
-Emoji JSON 定义资源来自 [izyumkin/MCEmojiPicker](https://github.com/izyumkin/MCEmojiPicker)，原项目同样使用 MIT License：
+Emoji JSON definition resources are derived from [izyumkin/MCEmojiPicker](https://github.com/izyumkin/MCEmojiPicker), which is also distributed under the MIT License:
 
 Copyright (c) 2022 Ivan Izyumkin
 
-完整第三方授权说明见 [NOTICE.md](NOTICE.md)。
+See [NOTICE.md](NOTICE.md) for the full third-party notice.

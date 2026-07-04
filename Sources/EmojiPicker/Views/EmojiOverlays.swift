@@ -2,7 +2,7 @@
 //  EmojiOverlays.swift
 //  EmojiPicker
 //
-//  Created by Miyin on 2026/07/04.
+//  Created by RamuNeon on 2026/07/04.
 //
 
 import SwiftUI
