@@ -190,4 +190,4 @@ Emoji JSON 定义资源来自 [izyumkin/MCEmojiPicker](https://github.com/izyumk
 
 Copyright (c) 2022 Ivan Izyumkin
 
-使用或分发本项目时，请保留原始 MIT 授权说明。
+完整第三方授权说明见 [NOTICE.md](NOTICE.md)。
